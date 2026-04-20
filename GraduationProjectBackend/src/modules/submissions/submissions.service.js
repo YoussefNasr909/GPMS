@@ -11,6 +11,7 @@ import {
   getLatestVersionForDeliverable,
 } from "./submissions.repository.js";
 import { findTeamByLeaderId, findTeamMemberByUserId } from "../teams/teams.repository.js";
+import { notify } from "../../common/utils/notify.js";
 
 // SDLC phase → required/optional deliverables mapping
 const SDLC_PHASE_DELIVERABLES = {
@@ -249,6 +250,18 @@ export async function gradeSubmissionService(actor, submissionId, { grade, feedb
     reviewedAt: new Date(),
   });
 
+  // Notify the team leader their submission was graded
+  if (submission.submittedByUserId) {
+    const gradeText = grade !== null && grade !== undefined ? ` — Grade: ${grade}` : "";
+    await notify({
+      userId: submission.submittedByUserId,
+      type: "SUBMISSION_GRADED",
+      title: "Submission Graded",
+      message: `Your "${submission.deliverableType}" submission has been approved by ${buildFullName(actor)}${gradeText}.`,
+      actionUrl: "/dashboard/submissions",
+    });
+  }
+
   return toSubmissionResponse(updated);
 }
 
@@ -274,6 +287,17 @@ export async function requestRevisionService(actor, submissionId, { feedback }) 
     reviewedByUserId: actor.id,
     reviewedAt: new Date(),
   });
+
+  // Notify the submitter that changes are needed
+  if (submission.submittedByUserId) {
+    await notify({
+      userId: submission.submittedByUserId,
+      type: "SUBMISSION_FEEDBACK",
+      title: "Revision Requested",
+      message: `${buildFullName(actor)} has requested revisions on your "${submission.deliverableType}" submission: "${feedback}".`,
+      actionUrl: "/dashboard/submissions",
+    });
+  }
 
   return toSubmissionResponse(updated);
 }
@@ -444,6 +468,32 @@ export async function advanceStageService(actor, query) {
     data: { stage: nextStage },
     select: { id: true, name: true, stage: true },
   });
+
+  // Notify the leader + all team members about the stage change
+  const fullTeam = await prisma.team.findUnique({
+    where: { id: team.id },
+    select: {
+      leaderId: true,
+      members: { select: { userId: true } },
+    },
+  });
+
+  if (fullTeam) {
+    const memberUserIds = fullTeam.members.map((m) => m.userId);
+    const allUserIds = [fullTeam.leaderId, ...memberUserIds];
+
+    await Promise.all(
+      allUserIds.map((userId) =>
+        notify({
+          userId,
+          type: "SYSTEM",
+          title: "Project Stage Advanced",
+          message: `Your team's project has moved to the "${nextStage}" phase. Time to focus on the next deliverables!`,
+          actionUrl: "/dashboard/submissions",
+        }),
+      ),
+    );
+  }
 
   return {
     team: updated,

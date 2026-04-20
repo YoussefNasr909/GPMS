@@ -1145,7 +1145,22 @@ export async function leaveTeamService(actor, teamId) {
     throw new AppError("You are not a member of this team.", 404, "TEAM_MEMBERSHIP_NOT_FOUND");
   }
 
+  const teamName = membership.team.name;
+  const leaderId = membership.team.leader?.id;
+
   const deleted = await deleteTeamMemberByUserId(actor.id);
+
+  // Notify the team leader that a member left
+  if (leaderId && leaderId !== actor.id) {
+    await notify({
+      userId: leaderId,
+      type: "SYSTEM",
+      title: "Member Left Team",
+      message: `${buildFullName(deleted.user)} has left your team "${teamName}".`,
+      actionUrl: "/dashboard/my-team",
+    });
+  }
+
   return {
     teamId,
     leftAt: new Date().toISOString(),
@@ -1167,6 +1182,16 @@ export async function removeTeamMemberService(actor, teamId, userId) {
   }
 
   const deleted = await deleteTeamMemberByUserId(userId);
+
+  // Notify the removed member
+  await notify({
+    userId,
+    type: "SYSTEM",
+    title: "Removed from Team",
+    message: `You have been removed from team "${team.name}" by ${buildFullName(team.leader)}.`,
+    actionUrl: "/dashboard/teams",
+  });
+
   return {
     teamId,
     removedAt: new Date().toISOString(),
