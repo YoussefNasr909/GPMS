@@ -35,6 +35,7 @@ export const submissionSelect = {
   reviewedAt: true,
   createdAt: true,
   updatedAt: true,
+  submittedByUserId: true,   // ← required by notification triggers
   submittedBy: { select: submissionUserSelect },
   reviewedBy: { select: submissionUserSelect },
   team: { select: { id: true, name: true, stage: true } },

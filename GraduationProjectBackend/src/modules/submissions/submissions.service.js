@@ -250,16 +250,19 @@ export async function gradeSubmissionService(actor, submissionId, { grade, feedb
     reviewedAt: new Date(),
   });
 
-  // Notify the team leader their submission was graded
-  if (submission.submittedByUserId) {
-    const gradeText = grade !== null && grade !== undefined ? ` — Grade: ${grade}` : "";
+  // Notify the submitter their submission was graded
+  const submitterUserId = submission.submittedByUserId ?? submission.submittedBy?.id ?? null;
+  if (submitterUserId) {
+    const gradeText = grade !== null && grade !== undefined ? ` \u2014 Grade: ${grade}` : "";
     await notify({
-      userId: submission.submittedByUserId,
+      userId: submitterUserId,
       type: "SUBMISSION_GRADED",
       title: "Submission Graded",
       message: `Your "${submission.deliverableType}" submission has been approved by ${buildFullName(actor)}${gradeText}.`,
       actionUrl: "/dashboard/submissions",
     });
+  } else {
+    console.warn(`[notify] gradeSubmission: could not resolve submitter userId for submission ${submissionId}`);
   }
 
   return toSubmissionResponse(updated);
@@ -289,14 +292,17 @@ export async function requestRevisionService(actor, submissionId, { feedback }) 
   });
 
   // Notify the submitter that changes are needed
-  if (submission.submittedByUserId) {
+  const submitterUserId = submission.submittedByUserId ?? submission.submittedBy?.id ?? null;
+  if (submitterUserId) {
     await notify({
-      userId: submission.submittedByUserId,
+      userId: submitterUserId,
       type: "SUBMISSION_FEEDBACK",
       title: "Revision Requested",
       message: `${buildFullName(actor)} has requested revisions on your "${submission.deliverableType}" submission: "${feedback}".`,
       actionUrl: "/dashboard/submissions",
     });
+  } else {
+    console.warn(`[notify] requestRevision: could not resolve submitter userId for submission ${submissionId}`);
   }
 
   return toSubmissionResponse(updated);
