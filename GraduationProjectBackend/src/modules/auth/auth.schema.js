@@ -109,8 +109,8 @@ export const oauthCompleteSchema = z.object({
       phone: z.string().min(7).max(20),
       academicId: academicIdSchema,
       department: z.enum(DEPARTMENT_VALUES),
-      academicYear: z.enum(ACADEMIC_YEAR_VALUES),
-      preferredTrack: z.enum(TRACK_VALUES),
+      academicYear: z.enum(ACADEMIC_YEAR_VALUES).optional(),
+      preferredTrack: z.enum(TRACK_VALUES).optional(),
 
       password: strongPassword,
       confirmPassword: z.string().min(8),

@@ -68,6 +68,10 @@ function assertAccountCanAccess(user) {
   }
 }
 
+function roleRequiresStudentAcademicFields(role) {
+  return role === "STUDENT" || role === "LEADER";
+}
+
 // -------------------- services --------------------
 
 /**
@@ -409,6 +413,25 @@ export async function oauthCompleteService(userId, payload) {
   const id = String(userId ?? "").trim();
   if (!id) throw httpError(400, "VALIDATION_ERROR", "Invalid user id");
 
+  const currentUser = await prisma.user.findUnique({
+    where: { id },
+    select: { id: true, role: true },
+  });
+
+  if (!currentUser) {
+    throw httpError(404, "USER_NOT_FOUND", "User not found");
+  }
+
+  const requiresStudentAcademicFields = roleRequiresStudentAcademicFields(currentUser.role);
+
+  if (requiresStudentAcademicFields && (!payload.academicYear || !payload.preferredTrack)) {
+    throw httpError(
+      400,
+      "VALIDATION_ERROR",
+      "Academic year and preferred track are required for student and leader accounts"
+    );
+  }
+
   // academicId unique check
   const existing = await prisma.user.findUnique({
     where: { academicId: payload.academicId },
@@ -427,8 +450,8 @@ export async function oauthCompleteService(userId, payload) {
       phone: payload.phone,
       academicId: payload.academicId,
       department: payload.department,
-      academicYear: payload.academicYear,
-      preferredTrack: payload.preferredTrack,
+      academicYear: requiresStudentAcademicFields ? payload.academicYear : null,
+      preferredTrack: requiresStudentAcademicFields ? payload.preferredTrack : null,
       passwordHash,
     },
   });

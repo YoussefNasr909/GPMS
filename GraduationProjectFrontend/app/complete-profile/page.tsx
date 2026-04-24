@@ -37,6 +37,7 @@ import { useTheme } from "next-themes"
 import { authApi } from "@/lib/api/auth"
 import { useAuthStore } from "@/lib/stores/auth-store"
 import { mapApiUserToUiUser } from "@/lib/api/mappers"
+import { doesUserRequireStudentAcademicFields, isUserProfileIncomplete } from "@/lib/auth/profile-completion"
 
 // ✅ B) Using enum-values that match your backend Prisma enums
 const DEPARTMENTS = [
@@ -101,7 +102,7 @@ export default function CompleteProfilePage() {
   const { theme, setTheme } = useTheme()
 
   // ✅ G) Using store to ensure user is authenticated
-  const { accessToken, hasHydrated, setCurrentUser, setAccessToken, logout } = useAuthStore()
+  const { accessToken, currentUser, hasHydrated, setCurrentUser, setAccessToken, logout } = useAuthStore()
   const readTokenFromUrl = useCallback(() => {
     if (typeof window === "undefined") return null
 
@@ -113,6 +114,30 @@ export default function CompleteProfilePage() {
     // fallback if you ever switch backend to ?token=
     return new URLSearchParams(window.location.search).get("token")
   }, [])
+
+  const [isLoading, setIsLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+
+  const [formData, setFormData] = useState({
+    phone: "",
+    academicId: "",
+    department: "",
+    academicYear: "",
+    preferredTrack: "",
+    password: "",
+    confirmPassword: "",
+  })
+  const [requiresStudentAcademicFields, setRequiresStudentAcademicFields] = useState(() =>
+    currentUser ? doesUserRequireStudentAcademicFields(currentUser) : true,
+  )
+
+  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [passwordStrength, setPasswordStrength] = useState(0)
+  const [passwordFeedback, setPasswordFeedback] = useState<string[]>([])
+  const [success, setSuccess] = useState(false)
+  const [focusedField, setFocusedField] = useState<string | null>(null)
+  const [mounted, setMounted] = useState(false)
 
   // 1) store token from URL into zustand
   useEffect(() => {
@@ -140,7 +165,9 @@ export default function CompleteProfilePage() {
         const apiUser = await authApi.me()
         if (cancelled) return
 
-        setCurrentUser(mapApiUserToUiUser(apiUser))
+        const mappedUser = mapApiUserToUiUser(apiUser)
+        setCurrentUser(mappedUser)
+        setRequiresStudentAcademicFields(doesUserRequireStudentAcademicFields(apiUser))
         const academicId = String((apiUser as any).academicId ?? "")
         setFormData((prev) => ({
           ...prev,
@@ -151,14 +178,7 @@ export default function CompleteProfilePage() {
           preferredTrack: prev.preferredTrack || String((apiUser as any).preferredTrack ?? ""),
         }))
 
-        const incomplete =
-          !apiUser.phone ||
-          !apiUser.department ||
-          !apiUser.academicYear ||
-          !apiUser.preferredTrack ||
-          academicId.startsWith("OAUTH-")
-
-        if (!incomplete) router.replace("/dashboard")
+        if (!isUserProfileIncomplete(apiUser)) router.replace("/dashboard")
       } catch (e) {
         logout()
         router.replace("/login")
@@ -171,6 +191,7 @@ export default function CompleteProfilePage() {
   }, [hasHydrated, accessToken, setCurrentUser, logout, router])
 
 
+  /* duplicate state block removed after hook reordering
   const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -185,6 +206,9 @@ export default function CompleteProfilePage() {
     password: "",
     confirmPassword: "",
   })
+  const [requiresStudentAcademicFields, setRequiresStudentAcademicFields] = useState(() =>
+    currentUser ? doesUserRequireStudentAcademicFields(currentUser) : true,
+  )
 
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [passwordStrength, setPasswordStrength] = useState(0)
@@ -192,10 +216,39 @@ export default function CompleteProfilePage() {
   const [success, setSuccess] = useState(false)
   const [focusedField, setFocusedField] = useState<string | null>(null)
   const [mounted, setMounted] = useState(false)
+  */
 
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  useEffect(() => {
+    if (!currentUser) return
+    setRequiresStudentAcademicFields(doesUserRequireStudentAcademicFields(currentUser))
+  }, [currentUser])
+
+  useEffect(() => {
+    if (requiresStudentAcademicFields) return
+
+    setFormData((prev) => {
+      if (!prev.academicYear && !prev.preferredTrack) return prev
+
+      return {
+        ...prev,
+        academicYear: "",
+        preferredTrack: "",
+      }
+    })
+
+    setErrors((prev) => {
+      if (!prev.academicYear && !prev.preferredTrack) return prev
+
+      const next = { ...prev }
+      delete next.academicYear
+      delete next.preferredTrack
+      return next
+    })
+  }, [requiresStudentAcademicFields])
 
   const calculatePasswordStrength = useCallback((password: string) => {
     let strength = 0
@@ -271,12 +324,12 @@ export default function CompleteProfilePage() {
       newErrors.department = "Department is required"
     }
 
-    if (!formData.academicYear) {
+    if (requiresStudentAcademicFields && !formData.academicYear) {
       newErrors.academicYear = "Academic year is required"
     }
 
     // ✅ D) Added preferredTrack validation
-    if (!formData.preferredTrack) {
+    if (requiresStudentAcademicFields && !formData.preferredTrack) {
       newErrors.preferredTrack = "Preferred track is required"
     }
 
@@ -325,8 +378,8 @@ export default function CompleteProfilePage() {
         phone: formData.phone.trim(),
         academicId: formData.academicId.trim(),
         department: formData.department as any,
-        academicYear: formData.academicYear as any,
-        preferredTrack: formData.preferredTrack as any,
+        academicYear: requiresStudentAcademicFields ? (formData.academicYear as any) : undefined,
+        preferredTrack: requiresStudentAcademicFields ? (formData.preferredTrack as any) : undefined,
         password: formData.password,
         confirmPassword: formData.confirmPassword,
       })
@@ -599,7 +652,9 @@ export default function CompleteProfilePage() {
                 <div className="mb-6 space-y-3">
                   <h2 className="text-xl sm:text-2xl font-bold mb-2">Complete your workspace access</h2>
                   <p className="text-sm text-muted-foreground">
-                    If you signed in with Google or GitHub, add the remaining academic details below.
+                    {requiresStudentAcademicFields
+                      ? "If you signed in with Google or GitHub, add the remaining academic details below."
+                      : "If you signed in with Google or GitHub, add the remaining access details below."}
                   </p>
                   <div className="h-1.5 w-full overflow-hidden rounded-full bg-secondary">
                     <div className="h-full w-full rounded-full bg-primary" />
@@ -611,7 +666,11 @@ export default function CompleteProfilePage() {
                     <FormAlert
                       type="info"
                       title="Profile required"
-                      message="Please complete your profile to continue. Some required academic information is still missing."
+                      message={
+                        requiresStudentAcademicFields
+                          ? "Please complete your profile to continue. Some required academic information is still missing."
+                          : "Please complete your profile to continue. This role only needs contact, department, and ID details."
+                      }
                     />
                   </div>
                 )}
@@ -652,7 +711,7 @@ export default function CompleteProfilePage() {
                   {/* Academic ID */}
                   <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
                     <Label htmlFor="academicId" className="text-xs sm:text-sm font-semibold mb-2 block">
-                      Academic ID
+                      {requiresStudentAcademicFields ? "Academic ID" : "Academic / Staff ID"}
                     </Label>
                     <div className={`relative transition-all ${focusedField === "academicId" ? "ring-2 ring-primary rounded-xl sm:rounded-2xl" : ""}`}>
                       <IdCard className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
@@ -660,7 +719,7 @@ export default function CompleteProfilePage() {
                         id="academicId"
                         name="academicId"
                         type="text"
-                        placeholder="XXXXXXXX"
+                        placeholder={requiresStudentAcademicFields ? "XXXXXXXX" : "Enter your academic or staff ID"}
                         className={`pl-9 sm:pl-11 h-10 sm:h-12 rounded-lg sm:rounded-xl text-sm transition-all ${
                           errors.academicId ? "border-destructive" : focusedField === "academicId" ? "border-transparent" : ""
                         }`}
@@ -674,7 +733,7 @@ export default function CompleteProfilePage() {
                   </motion.div>
 
                   {/* Department and Academic Year */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                  <div className={`grid grid-cols-1 gap-4 sm:gap-5 ${requiresStudentAcademicFields ? "sm:grid-cols-2" : ""}`}>
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}>
                       <Label htmlFor="department" className="text-xs sm:text-sm font-semibold mb-2 block">
                         Department
@@ -701,6 +760,7 @@ export default function CompleteProfilePage() {
                       {errors.department && <p className="text-xs sm:text-sm text-destructive mt-1.5">{errors.department}</p>}
                     </motion.div>
 
+                    {requiresStudentAcademicFields && (
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}>
                       <Label htmlFor="academicYear" className="text-xs sm:text-sm font-semibold mb-2 block">
                         Academic Year
@@ -725,9 +785,11 @@ export default function CompleteProfilePage() {
                       </Select>
                       {errors.academicYear && <p className="text-xs sm:text-sm text-destructive mt-1.5">{errors.academicYear}</p>}
                     </motion.div>
+                    )}
                   </div>
 
                   {/* ✅ E) Preferred Track added */}
+                  {requiresStudentAcademicFields ? (
                   <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.75 }}>
                     <Label htmlFor="preferredTrack" className="text-xs sm:text-sm font-semibold mb-2 block">
                       Preferred Track
@@ -752,6 +814,16 @@ export default function CompleteProfilePage() {
                     </Select>
                     {errors.preferredTrack && <p className="text-xs sm:text-sm text-destructive mt-1.5">{errors.preferredTrack}</p>}
                   </motion.div>
+                  ) : (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.75 }}
+                      className="rounded-xl border border-dashed border-primary/25 bg-primary/5 px-4 py-3 text-sm text-muted-foreground"
+                    >
+                      Academic year and preferred track are only required for student and leader accounts.
+                    </motion.div>
+                  )}
 
                   {/* Password */}
                   <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}>

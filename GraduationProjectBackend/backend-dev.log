@@ -1,0 +1,117 @@
+
+> backend@1.0.0 dev
+> nodemon src/server.js
+
+[33m[nodemon] 3.1.11[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching path(s): src\**\* prisma\**\*[39m
+[33m[nodemon] watching extensions: js[39m
+[32m[nodemon] starting `node src/server.js src/server.js`[39m
+✅ DB connected
+🚀 Server running on http://localhost:4000
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 1.077 ms - 0[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 30.156 ms - 1351[0m
+[0mPOST /api/v1/auth/login [32m200[0m 93.244 ms - 693[0m
+[0mGET /api/v1/discussions [32m200[0m 66.246 ms - 2839[0m
+[0mPOST /api/v1/discussions/cmoc7ep8t000dqn185340ps96/comments [32m201[0m 32.947 ms - 404[0m
+[0mPOST /api/v1/discussions/cmoc7ep8t000dqn185340ps96/comments [32m201[0m 17.134 ms - 411[0m
+[0mGET /api/v1/discussions/cmoc7ep8t000dqn185340ps96 [32m200[0m 10.657 ms - 2705[0m
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 0.152 ms - 0[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 13.676 ms - 1351[0m
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 0.190 ms - 0[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 4.101 ms - 1351[0m
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 0.171 ms - 0[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 4.601 ms - 1351[0m
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 0.160 ms - 0[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 4.637 ms - 1351[0m
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 0.174 ms - 0[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 4.092 ms - 1351[0m
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 0.243 ms - 0[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 37.737 ms - 1351[0m
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 0.167 ms - 0[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 4.387 ms - 1351[0m
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 0.236 ms - 0[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 4.604 ms - 1351[0m
+[0mOPTIONS /api/v1/teams/my [32m204[0m 0.251 ms - 0[0m
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 1.139 ms - 0[0m
+[0mOPTIONS /api/v1/discussions [32m204[0m 0.197 ms - 0[0m
+[0mGET /api/v1/discussions [32m200[0m 91.237 ms - 2830[0m
+[0mGET /api/v1/teams/my [36m304[0m 111.932 ms - -[0m
+[0mGET /api/v1/discussions [36m304[0m 17.256 ms - -[0m
+[0mGET /api/v1/teams/my [36m304[0m 26.954 ms - -[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 165.752 ms - 1351[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 14.385 ms - 1351[0m
+[0mOPTIONS /api/v1/auth/login [32m204[0m 0.543 ms - 0[0m
+[0mPOST /api/v1/auth/login [32m200[0m 71.649 ms - 693[0m
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 0.184 ms - 0[0m
+[0mOPTIONS /api/v1/teams/my [32m204[0m 0.190 ms - 0[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 8.293 ms - 1351[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 7.924 ms - 1351[0m
+[0mGET /api/v1/teams/my [32m200[0m 17.516 ms - 213[0m
+[0mGET /api/v1/teams/my [36m304[0m 17.197 ms - -[0m
+[0mOPTIONS /api/v1/discussions [32m204[0m 0.138 ms - 0[0m
+[0mGET /api/v1/discussions [32m200[0m 15.859 ms - 2839[0m
+[0mGET /api/v1/discussions [36m304[0m 10.116 ms - -[0m
+[0mGET /api/v1/discussions [36m304[0m 8.847 ms - -[0m
+[0mGET /api/v1/discussions [36m304[0m 6.569 ms - -[0m
+[0mOPTIONS /api/v1/discussions/cmoc7ep8t000dqn185340ps96 [32m204[0m 0.165 ms - 0[0m
+[0mGET /api/v1/discussions/cmoc7ep8t000dqn185340ps96 [32m200[0m 7.005 ms - 2705[0m
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 0.119 ms - 0[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 3.612 ms - 1351[0m
+[0mOPTIONS /api/v1/discussions/cmoc7ep8t000dqn185340ps96/comments [32m204[0m 0.146 ms - 0[0m
+[0mPOST /api/v1/discussions/cmoc7ep8t000dqn185340ps96/comments [32m201[0m 7.536 ms - 367[0m
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 0.576 ms - 0[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 5.701 ms - 1351[0m
+[0mOPTIONS /api/v1/discussions/cmoc7ep8t000dqn185340ps96/comments [32m204[0m 0.104 ms - 0[0m
+[0mPOST /api/v1/discussions/cmoc7ep8t000dqn185340ps96/comments [32m201[0m 9.074 ms - 388[0m
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 0.099 ms - 0[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 3.865 ms - 1351[0m
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 0.093 ms - 0[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 3.578 ms - 1351[0m
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 0.136 ms - 0[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 3.998 ms - 1351[0m
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 0.162 ms - 0[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 4.168 ms - 1351[0m
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 0.090 ms - 0[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 3.968 ms - 1351[0m
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 0.123 ms - 0[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 3.680 ms - 1351[0m
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 0.179 ms - 0[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 6.869 ms - 1351[0m
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 0.162 ms - 0[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 5.593 ms - 1351[0m
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 0.104 ms - 0[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 3.846 ms - 1351[0m
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 0.140 ms - 0[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 5.784 ms - 1351[0m
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 0.151 ms - 0[0m
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 0.160 ms - 0[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 4.341 ms - 1351[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 5.574 ms - 1351[0m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/server.js src/server.js`[39m
+✅ DB connected
+🚀 Server running on http://localhost:4000
+[32m[nodemon] clean exit - waiting for changes before restart[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/server.js src/server.js`[39m
+✅ DB connected
+🚀 Server running on http://localhost:4000
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/server.js src/server.js`[39m
+✅ DB connected
+🚀 Server running on http://localhost:4000
+[32m[nodemon] clean exit - waiting for changes before restart[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/server.js src/server.js`[39m
+✅ DB connected
+🚀 Server running on http://localhost:4000
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 0.997 ms - 0[0m
+[0mOPTIONS /api/v1/notifications/unread-count [32m204[0m 0.159 ms - 0[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 21.047 ms - 1351[0m
+[0mGET /api/v1/notifications/unread-count [31m500[0m 7.460 ms - 1351[0m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node src/server.js src/server.js`[39m
+✅ DB connected
+🚀 Server running on http://localhost:4000
+[32m[nodemon] clean exit - waiting for changes before restart[39m

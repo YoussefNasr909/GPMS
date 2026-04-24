@@ -173,6 +173,13 @@ enum ResourceType {
   GITHUB
 }
 
+enum DiscussionCategory {
+  TECHNICAL
+  TEAM
+  RESOURCES
+  GENERAL
+}
+
 enum NotificationType {
   TASK_ASSIGNED
   TASK_REVIEWED
@@ -280,6 +287,10 @@ model User {
   uploadedDocuments       TeamDocument[]     @relation("DocumentUploader")
   createdResources        TeamResource[]     @relation("ResourceCreator")
   notifications           Notification[]     @relation("UserNotifications")
+  authoredDiscussions     Discussion[]       @relation("DiscussionAuthor")
+  discussionComments      DiscussionComment[] @relation("DiscussionCommentAuthor")
+  discussionLikes         DiscussionLike[]   @relation("DiscussionLikeUser")
+  discussionViews         DiscussionView[]   @relation("DiscussionViewUser")
 }
 
 model Team {
@@ -633,6 +644,73 @@ model TeamResource {
 
   @@index([createdByUserId])
   @@index([category])
+}
+
+model Discussion {
+  id           String             @id @default(cuid())
+  title        String
+  content      String
+  category     DiscussionCategory @default(GENERAL)
+  tags         String[]           @default([])
+  likeCount    Int                @default(0) @map("likesCount")
+  viewCount    Int                @default(0) @map("viewsCount")
+  authorId     String
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+
+  author   User                @relation("DiscussionAuthor", fields: [authorId], references: [id], onDelete: Cascade)
+  comments DiscussionComment[]
+  likes    DiscussionLike[]
+  views    DiscussionView[]
+
+  @@index([authorId])
+  @@index([category, createdAt])
+  @@index([createdAt])
+}
+
+model DiscussionComment {
+  id           String   @id @default(cuid())
+  discussionId String
+  authorId     String
+  parentCommentId String?
+  content      String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  discussion    Discussion         @relation(fields: [discussionId], references: [id], onDelete: Cascade)
+  author        User               @relation("DiscussionCommentAuthor", fields: [authorId], references: [id], onDelete: Cascade)
+  parentComment DiscussionComment? @relation("DiscussionCommentReplies", fields: [parentCommentId], references: [id], onDelete: Cascade)
+  replies       DiscussionComment[] @relation("DiscussionCommentReplies")
+
+  @@index([discussionId, createdAt])
+  @@index([authorId])
+  @@index([parentCommentId, createdAt])
+}
+
+model DiscussionLike {
+  id           String   @id @default(cuid())
+  discussionId String
+  userId       String
+  createdAt    DateTime @default(now())
+
+  discussion Discussion @relation(fields: [discussionId], references: [id], onDelete: Cascade)
+  user       User       @relation("DiscussionLikeUser", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([discussionId, userId])
+  @@index([userId])
+}
+
+model DiscussionView {
+  id           String   @id @default(cuid())
+  discussionId String
+  userId       String
+  createdAt    DateTime @default(now())
+
+  discussion Discussion @relation(fields: [discussionId], references: [id], onDelete: Cascade)
+  user       User       @relation("DiscussionViewUser", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([discussionId, userId])
+  @@index([userId])
 }
 
 model Notification {

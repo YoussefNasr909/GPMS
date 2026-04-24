@@ -10,6 +10,7 @@ import documentsRouter from "../modules/documents/documents.routes.js";
 import resourcesRouter from "../modules/resources/resources.routes.js";
 import submissionsRouter from "../modules/submissions/submissions.routes.js";
 import notificationsRouter from "../modules/notifications/notifications.routes.js";
+import discussionsRouter from "../modules/discussions/discussions.routes.js";
 const router = Router();
 
 router.get("/ping", (req, res) => {
@@ -25,4 +26,5 @@ router.use("/documents", documentsRouter);
 router.use("/resources", resourcesRouter);
 router.use("/submissions", submissionsRouter);
 router.use("/notifications", notificationsRouter);
+router.use("/discussions", discussionsRouter);
 export default router;

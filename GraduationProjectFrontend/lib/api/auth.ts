@@ -69,8 +69,8 @@ oauthComplete: (payload: {
   phone: string
   academicId: string
   department: any
-  academicYear: any
-  preferredTrack: any
+  academicYear?: any
+  preferredTrack?: any
   password: string
   confirmPassword: string
 }) =>

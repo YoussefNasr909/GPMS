@@ -789,3 +789,69 @@ export type Paginated<T> = {
   items: T[]
 }
 
+export type ApiDiscussionCategory = "technical" | "team" | "resources" | "general"
+
+export type ApiDiscussionAuthor = {
+  id: string
+  firstName: string
+  lastName: string
+  fullName: string
+  avatarUrl: string | null
+  role: Role
+  roleLabel: string
+}
+
+export type ApiDiscussionComment = {
+  id: string
+  content: string
+  parentCommentId: string | null
+  replyCount: number
+  replies: ApiDiscussionComment[]
+  createdAt: string
+  updatedAt: string
+  author: ApiDiscussionAuthor
+}
+
+export type ApiDiscussionSummary = {
+  id: string
+  title: string
+  content: string
+  category: ApiDiscussionCategory
+  tags: string[]
+  likeCount: number
+  viewCount: number
+  commentCount: number
+  isPinned: boolean
+  createdAt: string
+  updatedAt: string
+  author: ApiDiscussionAuthor
+  viewerHasLiked: boolean
+  viewerHasViewed: boolean
+}
+
+export type ApiDiscussionDetail = ApiDiscussionSummary & {
+  comments: ApiDiscussionComment[]
+}
+
+export type ApiDiscussionStats = {
+  totalDiscussions: number
+  activeToday: number
+  yourPosts: number
+  replies: number
+}
+
+export type ApiDiscussionPagination = {
+  page: number
+  limit: number
+  total: number
+  totalPages: number
+  hasNextPage: boolean
+  hasPreviousPage: boolean
+}
+
+export type ApiDiscussionFeed = {
+  items: ApiDiscussionSummary[]
+  stats: ApiDiscussionStats
+  meta: ApiDiscussionPagination
+}
+

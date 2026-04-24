@@ -1,0 +1,435 @@
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}
+API Error: PrismaClientKnownRequestError: 
+Invalid `prisma.notification.count()` invocation:
+
+
+The table `public.Notification` does not exist in the current database.
+    at ei.handleRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:7268)
+    at ei.handleAndLogRequestError (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6593)
+    at ei.request (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:121:6300)
+    at async a (C:\Users\abdel\OneDrive\سطح المكتب\gpmsss\GraduationProjectBackend\node_modules\@prisma\client\runtime\library.js:130:9551)
+    at async getUnreadCountService (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.service.js:52:17)
+    at async getUnreadCount (file:///C:/Users/abdel/OneDrive/%D8%B3%D8%B7%D8%AD%20%D8%A7%D9%84%D9%85%D9%83%D8%AA%D8%A8/gpmsss/GraduationProjectBackend/src/modules/notifications/notifications.controller.js:16:18) {
+  code: 'P2021',
+  meta: { modelName: 'Notification', table: 'public.Notification' },
+  clientVersion: '6.19.3'
+}

@@ -8,6 +8,7 @@ import { AlertCircle, Loader2 } from "lucide-react"
 import { authApi } from "@/lib/api/auth"
 import { useAuthStore } from "@/lib/stores/auth-store"
 import { mapApiUserToUiUser } from "@/lib/api/mappers"
+import { isUserProfileIncomplete } from "@/lib/auth/profile-completion"
 
 type OAuthParams = {
   token: string | null
@@ -96,17 +97,7 @@ export default function OAuthCallback() {
 
         setCurrentUser(mapApiUserToUiUser(apiUser))
 
-        const academicId = String((apiUser as { academicId?: string | null }).academicId ?? "")
-        const isBlank = (value: unknown) => value === null || value === undefined || String(value).trim() === ""
-        const incomplete =
-          isBlank(apiUser.phone) ||
-          isBlank(apiUser.department) ||
-          isBlank(apiUser.academicYear) ||
-          isBlank(apiUser.preferredTrack) ||
-          isBlank(academicId) ||
-          academicId.startsWith("OAUTH-")
-
-        if (incomplete) {
+        if (isUserProfileIncomplete(apiUser)) {
           router.replace("/complete-profile?reason=incomplete")
           return
         }
