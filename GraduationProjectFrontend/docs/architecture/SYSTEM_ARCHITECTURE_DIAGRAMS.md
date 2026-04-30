@@ -1,0 +1,896 @@
+# System Architecture Diagrams
+## Graduation Project Management System
+
+**Version:** 1.0  
+**Last Updated:** February 2025
+
+---
+
+## Table of Contents
+
+1. [High-Level Architecture](#high-level-architecture)
+2. [Frontend Architecture](#frontend-architecture)
+3. [Backend Architecture](#backend-architecture)
+4. [Database Schema](#database-schema)
+5. [Authentication Flow](#authentication-flow)
+6. [Real-time Communication](#real-time-communication)
+7. [File Storage Architecture](#file-storage-architecture)
+8. [Deployment Architecture](#deployment-architecture)
+
+---
+
+## High-Level Architecture
+
+\`\`\`
+┌──────────────────────────────────────────────────────────────────┐
+│                         CLIENT LAYER                              │
+├──────────────────────────────────────────────────────────────────┤
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
+│  │   Desktop    │  │   Tablet     │  │   Mobile     │          │
+│  │   Browser    │  │   Browser    │  │   Browser    │          │
+│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘          │
+│         │                  │                  │                   │
+│         └──────────────────┴──────────────────┘                   │
+│                           │                                       │
+│                      HTTPS/WSS                                    │
+│                           │                                       │
+├───────────────────────────┼───────────────────────────────────────┤
+│                 APPLICATION LAYER                                 │
+├──────────────────────────────────────────────────────────────────┤
+│  ┌──────────────────────────────────────────────────────────┐   │
+│  │              Next.js 16 Frontend (React 19)               │   │
+│  │  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐   │   │
+│  │  │ Pages &  │ │Components│ │  State   │ │  Hooks   │   │   │
+│  │  │ Routing  │ │  (UI)    │ │Management│ │ & Utils  │   │   │
+│  │  └──────────┘ └──────────┘ └──────────┘ └──────────┘   │   │
+│  └──────────────────────────────────────────────────────────┘   │
+│                           │                                       │
+│                      REST API / WebSocket                         │
+│                           │                                       │
+│  ┌──────────────────────────────────────────────────────────┐   │
+│  │           Express.js Backend (Node.js)                    │   │
+│  │  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐   │   │
+│  │  │   API    │ │  Auth    │ │  WebSocket│ │  Services │   │   │
+│  │  │ Routes   │ │Middleware│ │  Server   │ │ & Logic  │   │   │
+│  │  └──────────┘ └──────────┘ └──────────┘ └──────────┘   │   │
+│  └──────────────────────────────────────────────────────────┘   │
+├──────────────────────────────────────────────────────────────────┤
+│                       DATA LAYER                                  │
+├──────────────────────────────────────────────────────────────────┤
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
+│  │   MongoDB    │  │    Redis     │  │   AWS S3     │          │
+│  │  (Primary    │  │   (Cache &   │  │   (File      │          │
+│  │   Database)  │  │   Sessions)  │  │   Storage)   │          │
+│  └──────────────┘  └──────────────┘  └──────────────┘          │
+├──────────────────────────────────────────────────────────────────┤
+│                  EXTERNAL SERVICES                                │
+├──────────────────────────────────────────────────────────────────┤
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
+│  │   GitHub     │  │   Google     │  │    Email     │          │
+│  │     API      │  │   Calendar   │  │   Service    │          │
+│  └──────────────┘  └──────────────┘  └──────────────┘          │
+└──────────────────────────────────────────────────────────────────┘
+\`\`\`
+
+---
+
+## Frontend Architecture
+
+\`\`\`
+┌─────────────────────────────────────────────────────────────────┐
+│                    NEXT.JS 16 APPLICATION                        │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  ┌──────────────────────────────────────────────────────────┐  │
+│  │                    APP DIRECTORY                          │  │
+│  │  ┌──────────┐  ┌──────────┐  ┌──────────┐              │  │
+│  │  │   /app   │→ │ layout.tsx│→ │ page.tsx │              │  │
+│  │  │          │  │ (Root     │  │ (Landing │              │  │
+│  │  │          │  │  Layout)  │  │   Page)  │              │  │
+│  │  └──────────┘  └──────────┘  └──────────┘              │  │
+│  │                     │                                     │  │
+│  │            ┌────────┴────────┐                           │  │
+│  │            │                 │                           │  │
+│  │    ┌───────▼─────┐   ┌──────▼──────┐                   │  │
+│  │    │  /dashboard │   │   /auth     │                   │  │
+│  │    │             │   │             │                   │  │
+│  │    │  • layout  │   │  • login    │                   │  │
+│  │    │  • page    │   │  • register │                   │  │
+│  │    │  • loading │   │             │                   │  │
+│  │    │  • error   │   │             │                   │  │
+│  │    └─────┬───────┘   └─────────────┘                   │  │
+│  │          │                                              │  │
+│  │   ┌──────┴──────────────────────────────┐              │  │
+│  │   │      Dashboard Sub-Routes            │              │  │
+│  │   │  • /teams      • /tasks             │              │  │
+│  │   │  • /calendar   • /chat              │              │  │
+│  │   │  • /github     • /analytics         │              │  │
+│  │   │  • /files      • /meetings          │              │  │
+│  │   └──────────────────────────────────────┘              │  │
+│  └──────────────────────────────────────────────────────────┘  │
+│                                                                  │
+│  ┌──────────────────────────────────────────────────────────┐  │
+│  │                   COMPONENTS                              │  │
+│  │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  │  │
+│  │  │  App Shell   │  │  Features    │  │  UI Library  │  │  │
+│  │  │              │  │              │  │              │  │  │
+│  │  │ • Sidebar    │  │ • Chat       │  │ • Button     │  │  │
+│  │  │ • Topbar     │  │ • Calendar   │  │ • Card       │  │  │
+│  │  │ • Breadcrumb │  │ • Notifications│ │ • Dialog    │  │  │
+│  │  │              │  │              │  │ • Form       │  │  │
+│  │  └──────────────┘  └──────────────┘  └──────────────┘  │  │
+│  └──────────────────────────────────────────────────────────┘  │
+│                                                                  │
+│  ┌──────────────────────────────────────────────────────────┐  │
+│  │                STATE MANAGEMENT                           │  │
+│  │  ┌──────────────────────────────────────────────────┐    │  │
+│  │  │            Zustand Stores                         │    │  │
+│  │  │  • auth-store.ts   → User authentication         │    │  │
+│  │  │  • ui-store.ts     → UI state (sidebar, theme)   │    │  │
+│  │  └──────────────────────────────────────────────────┘    │  │
+│  └──────────────────────────────────────────────────────────┘  │
+│                                                                  │
+│  ┌──────────────────────────────────────────────────────────┐  │
+│  │                 DATA FETCHING                             │  │
+│  │  ┌──────────────────────────────────────────────────┐    │  │
+│  │  │  SWR (Stale-While-Revalidate)                     │    │  │
+│  │  │  • Automatic caching                              │    │  │
+│  │  │  • Background revalidation                        │    │  │
+│  │  │  • Optimistic updates                             │    │  │
+│  │  └──────────────────────────────────────────────────┘    │  │
+│  │  ┌──────────────────────────────────────────────────┐    │  │
+│  │  │  API Client (Axios)                               │    │  │
+│  │  │  • Request interceptors                           │    │  │
+│  │  │  • Response interceptors                          │    │  │
+│  │  │  • Error handling                                 │    │  │
+│  │  └──────────────────────────────────────────────────┘    │  │
+│  └──────────────────────────────────────────────────────────┘  │
+│                                                                  │
+│  ┌──────────────────────────────────────────────────────────┐  │
+│  │                  STYLING                                  │  │
+│  │  ┌──────────────────────────────────────────────────┐    │  │
+│  │  │  Tailwind CSS v4                                  │    │  │
+│  │  │  • Utility classes                                │    │  │
+│  │  │  • Design tokens                                  │    │  │
+│  │  │  • Dark mode support                              │    │  │
+│  │  │  • Responsive design                              │    │  │
+│  │  └──────────────────────────────────────────────────┘    │  │
+│  └──────────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────┘
+\`\`\`
+
+---
+
+## Backend Architecture
+
+\`\`\`
+┌─────────────────────────────────────────────────────────────────┐
+│                EXPRESS.JS BACKEND (Node.js)                      │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  ┌──────────────────────────────────────────────────────────┐  │
+│  │                    ENTRY POINT                            │  │
+│  │                    server.js                              │  │
+│  │  • Initialize Express app                                │  │
+│  │  • Connect to MongoDB                                    │  │
+│  │  • Setup middleware                                      │  │
+│  │  • Mount routes                                          │  │
+│  │  • Start HTTP/WebSocket server                          │  │
+│  └──────────────────────────────────────────────────────────┘  │
+│                            │                                     │
+│  ┌─────────────────────────┴──────────────────────────────┐   │
+│  │                   MIDDLEWARE STACK                       │   │
+│  │  1. morgan           → Request logging                  │   │
+│  │  2. cors             → CORS handling                    │   │
+│  │  3. helmet           → Security headers                 │   │
+│  │  4. express.json()   → JSON parser                      │   │
+│  │  5. authMiddleware   → JWT verification                 │   │
+│  │  6. roleMiddleware   → Permission checks                │   │
+│  │  7. errorHandler     → Global error handler             │   │
+│  └──────────────────────────────────────────────────────────┘   │
+│                            │                                     │
+│  ┌─────────────────────────┴──────────────────────────────┐   │
+│  │                     API ROUTES                           │   │
+│  │  /api/v1/                                               │   │
+│  │    ├─ /auth                                             │   │
+│  │    │   ├─ POST /login                                   │   │
+│  │    │   ├─ POST /register                                │   │
+│  │    │   ├─ POST /logout                                  │   │
+│  │    │   └─ POST /refresh-token                           │   │
+│  │    │                                                     │   │
+│  │    ├─ /users                                            │   │
+│  │    │   ├─ GET    /users                                 │   │
+│  │    │   ├─ GET    /users/:id                             │   │
+│  │    │   ├─ PUT    /users/:id                             │   │
+│  │    │   ├─ DELETE /users/:id                             │   │
+│  │    │   └─ GET    /users/:id/teams                       │   │
+│  │    │                                                     │   │
+│  │    ├─ /teams                                            │   │
+│  │    │   ├─ GET    /teams                                 │   │
+│  │    │   ├─ POST   /teams                                 │   │
+│  │    │   ├─ GET    /teams/:id                             │   │
+│  │    │   ├─ PUT    /teams/:id                             │   │
+│  │    │   ├─ DELETE /teams/:id                             │   │
+│  │    │   ├─ POST   /teams/:id/members                     │   │
+│  │    │   └─ DELETE /teams/:id/members/:userId             │   │
+│  │    │                                                     │   │
+│  │    ├─ /tasks                                            │   │
+│  │    │   ├─ GET    /tasks                                 │   │
+│  │    │   ├─ POST   /tasks                                 │   │
+│  │    │   ├─ GET    /tasks/:id                             │   │
+│  │    │   ├─ PUT    /tasks/:id                             │   │
+│  │    │   ├─ DELETE /tasks/:id                             │   │
+│  │    │   └─ PATCH  /tasks/:id/status                      │   │
+│  │    │                                                     │   │
+│  │    ├─ /meetings                                         │   │
+│  │    ├─ /calendar                                         │   │
+│  │    ├─ /chat                                             │   │
+│  │    ├─ /files                                            │   │
+│  │    ├─ /github                                           │   │
+│  │    ├─ /notifications                                    │   │
+│  │    └─ /analytics                                        │   │
+│  └──────────────────────────────────────────────────────────┘   │
+│                            │                                     │
+│  ┌─────────────────────────┴──────────────────────────────┐   │
+│  │                   CONTROLLERS                            │   │
+│  │  Handle HTTP requests, validate input, call services    │   │
+│  │  • authController.js                                    │   │
+│  │  • userController.js                                    │   │
+│  │  • teamController.js                                    │   │
+│  │  • taskController.js                                    │   │
+│  │  • meetingController.js                                 │   │
+│  │  • chatController.js                                    │   │
+│  └──────────────────────────────────────────────────────────┘   │
+│                            │                                     │
+│  ┌─────────────────────────┴──────────────────────────────┐   │
+│  │                     SERVICES                             │   │
+│  │  Business logic layer                                   │   │
+│  │  • authService.js      → Authentication logic           │   │
+│  │  • userService.js      → User CRUD operations           │   │
+│  │  • teamService.js      → Team management                │   │
+│  │  • taskService.js      → Task management                │   │
+│  │  • notificationService.js → Notifications               │   │
+│  │  • githubService.js    → GitHub API integration         │   │
+│  │  • calendarService.js  → Google Calendar sync           │   │
+│  │  • emailService.js     → Email sending                  │   │
+│  └──────────────────────────────────────────────────────────┘   │
+│                            │                                     │
+│  ┌─────────────────────────┴──────────────────────────────┐   │
+│  │                    MODELS (Mongoose)                     │   │
+│  │  MongoDB schema definitions                             │   │
+│  │  • User.js                                              │   │
+│  │  • Team.js                                              │   │
+│  │  • Task.js                                              │   │
+│  │  • Meeting.js                                           │   │
+│  │  • Message.js                                           │   │
+│  │  • Notification.js                                      │   │
+│  │  • File.js                                              │   │
+│  └──────────────────────────────────────────────────────────┘   │
+│                            │                                     │
+│  ┌─────────────────────────┴──────────────────────────────┐   │
+│  │                   UTILITIES                              │   │
+│  │  • validators.js    → Input validation                  │   │
+│  │  • helpers.js       → Helper functions                  │   │
+│  │  • constants.js     → Application constants             │   │
+│  │  • logger.js        → Logging utility                   │   │
+│  └──────────────────────────────────────────────────────────┘   │
+│                                                                  │
+│  ┌──────────────────────────────────────────────────────────┐  │
+│  │                  WEBSOCKET SERVER                         │  │
+│  │  Real-time communication using Socket.IO                │  │
+│  │  • Chat messages                                        │  │
+│  │  • Notifications                                        │  │
+│  │  • Live presence                                        │  │
+│  │  • Task updates                                         │  │
+│  └──────────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────────┘
+\`\`\`
+
+---
+
+## Database Schema
+
+### Entity Relationship Diagram
+
+\`\`\`
+┌─────────────┐         ┌─────────────┐         ┌─────────────┐
+│    User     │─────────│    Team     │─────────│   Task      │
+├─────────────┤   N:M   ├─────────────┤   1:N   ├─────────────┤
+│ _id         │◄────────│ _id         │◄────────│ _id         │
+│ email       │         │ name        │         │ title       │
+│ password    │         │ description │         │ description │
+│ fullName    │         │ leaderId    │         │ teamId      │
+│ role        │         │ memberIds[] │         │ assigneeId  │
+│ department  │         │ doctorId    │         │ status      │
+│ createdAt   │         │ taId        │         │ priority    │
+└─────────────┘         │ stack[]     │         │ deadline    │
+       │                │ stage       │         │ createdAt   │
+       │                │ progress    │         └─────────────┘
+       │                │ createdAt   │                │
+       │                └─────────────┘                │
+       │                       │                       │
+       │                       │                       │
+       ├───────────────────────┴───────────────────────┤
+       │                                               │
+       │                                               │
+┌──────▼──────┐         ┌─────────────┐         ┌─────▼───────┐
+│  Meeting    │         │ Notification│         │  Comment    │
+├─────────────┤         ├─────────────┤         ├─────────────┤
+│ _id         │         │ _id         │         │ _id         │
+│ title       │         │ userId      │         │ taskId      │
+│ teamId      │         │ type        │         │ userId      │
+│ startTime   │         │ title       │         │ content     │
+│ endTime     │         │ message     │         │ createdAt   │
+│ attendeeIds[]│        │ isRead      │         └─────────────┘
+│ location    │         │ createdAt   │
+│ meetingLink │         └─────────────┘
+│ createdAt   │
+└─────────────┘
+
+┌─────────────┐         ┌─────────────┐         ┌─────────────┐
+│  Message    │         │    File     │         │  Proposal   │
+├─────────────┤         ├─────────────┤         ├─────────────┤
+│ _id         │         │ _id         │         │ _id         │
+│ senderId    │         │ name        │         │ teamId      │
+│ channelId   │         │ url         │         │ title       │
+│ content     │         │ size        │         │ description │
+│ type        │         │ type        │         │ objectives  │
+│ reactions[] │         │ uploaderId  │         │ methodology │
+│ createdAt   │         │ teamId      │         │ status      │
+└─────────────┘         │ createdAt   │         │ feedback    │
+                        └─────────────┘         │ createdAt   │
+                                                └─────────────┘
+
+┌─────────────┐         ┌─────────────┐
+│   Activity  │         │ GitHubRepo  │
+├─────────────┤         ├─────────────┤
+│ _id         │         │ _id         │
+│ userId      │         │ teamId      │
+│ action      │         │ repoUrl     │
+│ resourceType│         │ accessToken │
+│ resourceId  │         │ lastSync    │
+│ description │         │ webhookId   │
+│ createdAt   │         │ createdAt   │
+└─────────────┘         └─────────────┘
+\`\`\`
+
+### MongoDB Collections Overview
+
+**Users Collection:**
+\`\`\`javascript
+{
+  _id: ObjectId,
+  email: String (unique, indexed),
+  password: String (hashed),
+  fullName: String,
+  role: String (enum: student, team_leader, supervisor, ta, admin),
+  department: String,
+  avatar: String (URL),
+  bio: String,
+  skills: [String],
+  gamification: {
+    xp: Number,
+    level: String,
+    coins: Number,
+    achievements: [ObjectId] ref: 'Achievement'
+  },
+  createdAt: Date,
+  updatedAt: Date
+}
+\`\`\`
+
+**Teams Collection:**
+\`\`\`javascript
+{
+  _id: ObjectId,
+  name: String (unique),
+  description: String,
+  leaderId: ObjectId ref: 'User',
+  memberIds: [ObjectId] ref: 'User',
+  doctorId: ObjectId ref: 'User',
+  taId: ObjectId ref: 'User',
+  stack: [String],
+  stage: String (enum: requirements, design, implementation, testing, deployment),
+  visibility: String (enum: public, private),
+  progress: Number (0-100),
+  health: String (enum: healthy, at-risk, critical),
+  inviteCode: String (unique, indexed),
+  maxMembers: Number,
+  joinRequests: [{
+    userId: ObjectId ref: 'User',
+    requestedAt: Date,
+    status: String (enum: pending, approved, rejected)
+  }],
+  createdAt: Date,
+  updatedAt: Date
+}
+\`\`\`
+
+**Tasks Collection:**
+\`\`\`javascript
+{
+  _id: ObjectId,
+  title: String,
+  description: String,
+  teamId: ObjectId ref: 'Team',
+  assigneeId: ObjectId ref: 'User',
+  status: String (enum: todo, in_progress, in_review, done),
+  priority: String (enum: low, medium, high),
+  phase: String (enum: requirements, design, implementation, testing, deployment),
+  deadline: Date (indexed),
+  estimatedHours: Number,
+  actualHours: Number,
+  tags: [String],
+  attachments: [{
+    name: String,
+    url: String,
+    size: Number
+  }],
+  createdAt: Date,
+  updatedAt: Date
+}
+\`\`\`
+
+---
+
+## Authentication Flow
+
+\`\`\`
+┌──────────┐                                    ┌──────────┐
+│  Client  │                                    │  Server  │
+└────┬─────┘                                    └────┬─────┘
+     │                                               │
+     │  1. POST /api/v1/auth/login                  │
+     │     { email, password }                      │
+     ├──────────────────────────────────────────────►
+     │                                               │
+     │                                               │  2. Validate credentials
+     │                                               │     Query User from DB
+     │                                               │     Compare hashed password
+     │                                               │
+     │                                               │  3. Generate tokens
+     │                                               │     accessToken (15min)
+     │                                               │     refreshToken (7days)
+     │                                               │
+     │  4. Response with tokens                      │
+     │     { accessToken, refreshToken, user }      │
+     ◄──────────────────────────────────────────────┤
+     │                                               │
+     │  5. Store tokens                              │
+     │     localStorage.setItem('accessToken')       │
+     │     httpOnly cookie for refreshToken          │
+     │                                               │
+     │                                               │
+     │  6. Subsequent API requests                   │
+     │     Authorization: Bearer {accessToken}       │
+     ├──────────────────────────────────────────────►
+     │                                               │
+     │                                               │  7. Verify JWT
+     │                                               │     Decode token
+     │                                               │     Check expiration
+     │                                               │     Verify signature
+     │                                               │
+     │  8. API Response                              │
+     ◄──────────────────────────────────────────────┤
+     │                                               │
+     │                                               │
+     │  9. Token Expired (401)                       │
+     ◄──────────────────────────────────────────────┤
+     │                                               │
+     │  10. POST /api/v1/auth/refresh-token          │
+     │      { refreshToken }                         │
+     ├──────────────────────────────────────────────►
+     │                                               │
+     │                                               │  11. Validate refresh token
+     │                                               │      Generate new accessToken
+     │                                               │
+     │  12. New accessToken                          │
+     ◄──────────────────────────────────────────────┤
+     │                                               │
+     │  13. Retry original request                   │
+     │      with new accessToken                     │
+     ├──────────────────────────────────────────────►
+     │                                               │
+     │  14. Success response                         │
+     ◄──────────────────────────────────────────────┤
+     │                                               │
+\`\`\`
+
+### JWT Token Structure
+
+**Access Token Payload:**
+\`\`\`json
+{
+  "userId": "507f1f77bcf86cd799439011",
+  "email": "student@university.edu",
+  "role": "student",
+  "iat": 1708000000,
+  "exp": 1708000900
+}
+\`\`\`
+
+**Refresh Token Payload:**
+\`\`\`json
+{
+  "userId": "507f1f77bcf86cd799439011",
+  "tokenId": "unique-token-id",
+  "iat": 1708000000,
+  "exp": 1708604800
+}
+\`\`\`
+
+---
+
+## Real-time Communication
+
+### WebSocket Architecture (Socket.IO)
+
+\`\`\`
+┌────────────────────────────────────────────────────────────────┐
+│                         CLIENT SIDE                             │
+├────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  const socket = io('wss://api.example.com', {                  │
+│    auth: { token: accessToken }                                │
+│  })                                                            │
+│                                                                 │
+│  // Join rooms                                                 │
+│  socket.emit('join:team', { teamId: 't1' })                   │
+│  socket.emit('join:chat', { channelId: 'c1' })                │
+│                                                                 │
+│  // Listen for events                                          │
+│  socket.on('message:new', (data) => { ... })                  │
+│  socket.on('task:updated', (data) => { ... })                 │
+│  socket.on('notification:new', (data) => { ... })             │
+│                                                                 │
+└────────────────────────────────────────────────────────────────┘
+                            │
+                       WSS Connection
+                            │
+┌────────────────────────────┴───────────────────────────────────┐
+│                       SERVER SIDE                               │
+├────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  const io = require('socket.io')(server, { cors: {...} })     │
+│                                                                 │
+│  // Authentication middleware                                  │
+│  io.use(async (socket, next) => {                             │
+│    const token = socket.handshake.auth.token                  │
+│    const user = await verifyToken(token)                      │
+│    socket.userId = user.id                                    │
+│    next()                                                      │
+│  })                                                            │
+│                                                                 │
+│  // Connection handler                                         │
+│  io.on('connection', (socket) => {                            │
+│                                                                 │
+│    // Join team rooms                                          │
+│    socket.on('join:team', ({ teamId }) => {                   │
+│      socket.join(`team:${teamId}`)                            │
+│    })                                                          │
+│                                                                 │
+│    // Handle chat messages                                     │
+│    socket.on('message:send', async (data) => {                │
+│      const message = await saveMessage(data)                  │
+│      io.to(`chat:${data.channelId}`)                          │
+│        .emit('message:new', message)                          │
+│    })                                                          │
+│                                                                 │
+│    // Handle task updates                                      │
+│    socket.on('task:update', async (data) => {                 │
+│      const task = await updateTask(data)                      │
+│      io.to(`team:${task.teamId}`)                             │
+│        .emit('task:updated', task)                            │
+│    })                                                          │
+│                                                                 │
+│    // Broadcast notifications                                  │
+│    const sendNotification = (userId, notification) => {       │
+│      io.to(`user:${userId}`)                                  │
+│        .emit('notification:new', notification)                │
+│    }                                                           │
+│                                                                 │
+│  })                                                            │
+│                                                                 │
+└────────────────────────────────────────────────────────────────┘
+\`\`\`
+
+### Event Types
+
+**Chat Events:**
+- `message:send` → Client sends message
+- `message:new` → Server broadcasts new message
+- `message:typing` → User is typing
+- `message:read` → Message marked as read
+
+**Task Events:**
+- `task:update` → Task status changed
+- `task:created` → New task added
+- `task:deleted` → Task removed
+- `task:assigned` → Task assigned to user
+
+**Notification Events:**
+- `notification:new` → New notification for user
+- `notification:read` → Notification marked as read
+- `notification:clear` → Clear all notifications
+
+**Presence Events:**
+- `user:online` → User came online
+- `user:offline` → User went offline
+- `user:away` → User is away
+
+---
+
+## File Storage Architecture
+
+\`\`\`
+┌────────────────────────────────────────────────────────────────┐
+│                        FILE UPLOAD FLOW                         │
+└────────────────────────────────────────────────────────────────┘
+
+1. CLIENT INITIATES UPLOAD
+   ┌──────────┐
+   │  Browser │
+   │          │  User selects file
+   │  [File]  │  FormData created
+   └────┬─────┘
+        │
+        │ POST /api/v1/files/upload
+        │ Content-Type: multipart/form-data
+        │
+        ▼
+2. SERVER RECEIVES FILE
+   ┌──────────────────┐
+   │  Express.js      │
+   │  + Multer        │  Validate file:
+   │                  │  • Size limit (10MB)
+   │  Middleware      │  • File type
+   └────┬─────────────┘  • Virus scan
+        │
+        │ File validated
+        │
+        ▼
+3. UPLOAD TO S3
+   ┌──────────────────┐
+   │  AWS SDK         │
+   │                  │  s3.upload({
+   │  Upload file     │    Bucket: 'graduation-files',
+   │  to S3 bucket    │    Key: 'teams/t1/file.pdf',
+   │                  │    Body: fileBuffer
+   └────┬─────────────┘  })
+        │
+        │ File uploaded
+        │ URL returned
+        │
+        ▼
+4. SAVE TO DATABASE
+   ┌──────────────────┐
+   │  MongoDB         │
+   │                  │  File document:
+   │  Save metadata   │  {
+   │                  │    name: 'design.pdf',
+   └────┬─────────────┘    url: 's3://...',
+        │                   size: 2048000,
+        │                   type: 'application/pdf',
+        │ Metadata saved    uploaderId: 'u1',
+        │                   teamId: 't1'
+        ▼                }
+5. RETURN TO CLIENT
+   ┌──────────┐
+   │  Browser │
+   │          │  Response:
+   │  Success │  {
+   └──────────┘    id: 'f1',
+                   url: 'https://cdn.../file.pdf',
+                   name: 'design.pdf'
+                 }
+\`\`\`
+
+### S3 Bucket Structure
+
+\`\`\`
+graduation-files/
+├── teams/
+│   ├── t1/
+│   │   ├── documents/
+│   │   │   ├── proposal.pdf
+│   │   │   └── report.docx
+│   │   ├── images/
+│   │   │   └── diagram.png
+│   │   └── code/
+│   │       └── source.zip
+│   └── t2/
+│       └── ...
+├── users/
+│   ├── u1/
+│   │   └── avatar.jpg
+│   └── u2/
+│       └── avatar.jpg
+└── temp/
+    └── uploads-pending-processing/
+\`\`\`
+
+### File Access Control
+
+\`\`\`javascript
+// Generate pre-signed URL for secure access
+const getFileUrl = async (fileId, userId) => {
+  const file = await File.findById(fileId)
+  
+  // Check permissions
+  if (!canAccessFile(userId, file)) {
+    throw new Error('Access denied')
+  }
+  
+  // Generate temporary URL (expires in 1 hour)
+  const signedUrl = s3.getSignedUrl('getObject', {
+    Bucket: 'graduation-files',
+    Key: file.s3Key,
+    Expires: 3600
+  })
+  
+  return signedUrl
+}
+\`\`\`
+
+---
+
+## Deployment Architecture
+
+### Production Environment
+
+\`\`\`
+┌────────────────────────────────────────────────────────────────┐
+│                         CLOUDFLARE CDN                          │
+│                      (SSL, DDoS Protection)                     │
+└────────────────────┬──────────────────────┬────────────────────┘
+                     │                      │
+         ┌───────────▼────────────┐   ┌─────▼──────────────────┐
+         │   Load Balancer        │   │   Static Assets CDN    │
+         │   (NGINX)              │   │   (Images, JS, CSS)    │
+         └───────────┬────────────┘   └────────────────────────┘
+                     │
+         ┌───────────┴────────────┐
+         │                        │
+    ┌────▼─────┐            ┌─────▼────┐
+    │ Frontend │            │ Frontend │
+    │ Server 1 │            │ Server 2 │
+    │ (Next.js)│            │ (Next.js)│
+    └────┬─────┘            └─────┬────┘
+         │                        │
+         └───────────┬────────────┘
+                     │
+         ┌───────────▼────────────┐
+         │   Backend Cluster      │
+         │   (Express.js)         │
+         ├────────────────────────┤
+         │  ┌──────┐    ┌──────┐ │
+         │  │ API  │    │ API  │ │
+         │  │Server│    │Server│ │
+         │  │  1   │    │  2   │ │
+         │  └───┬──┘    └───┬──┘ │
+         └──────┼───────────┼────┘
+                │           │
+    ┌───────────┴───────────┴──────────┐
+    │                                   │
+┌───▼────────┐  ┌──────────┐  ┌────────▼─────┐
+│  MongoDB   │  │  Redis   │  │   AWS S3     │
+│  Replica   │  │  Cache   │  │ File Storage │
+│    Set     │  │          │  │              │
+│            │  │          │  │              │
+│ ┌────────┐ │  └──────────┘  └──────────────┘
+│ │Primary │ │
+│ └────────┘ │
+│ ┌────────┐ │
+│ │Secondary│ │
+│ └────────┘ │
+│ ┌────────┐ │
+│ │Secondary│ │
+│ └────────┘ │
+└────────────┘
+\`\`\`
+
+### Infrastructure Components
+
+**Frontend Servers (Next.js):**
+- 2+ instances for redundancy
+- Auto-scaling based on traffic
+- Server-side rendering (SSR)
+- Static generation for public pages
+- Deployed on Vercel or AWS EC2
+
+**Backend API Servers (Express.js):**
+- 2+ instances behind load balancer
+- Horizontal scaling
+- PM2 for process management
+- Deployed on AWS EC2 or DigitalOcean
+
+**Database (MongoDB):**
+- Replica set (1 primary + 2 secondaries)
+- Automatic failover
+- Hosted on MongoDB Atlas or self-hosted
+
+**Caching (Redis):**
+- Session storage
+- API response caching
+- Real-time data
+- Hosted on Redis Cloud or AWS ElastiCache
+
+**File Storage (AWS S3):**
+- Scalable object storage
+- CDN integration (CloudFront)
+- Versioning enabled
+- Lifecycle policies for cost optimization
+
+**Load Balancer (NGINX):**
+- Distributes traffic across backend servers
+- SSL termination
+- Request rate limiting
+- Health checks
+
+---
+
+### CI/CD Pipeline
+
+\`\`\`
+┌──────────────────────────────────────────────────────────────┐
+│                     GitHub Repository                         │
+└────────────────────┬─────────────────────────────────────────┘
+                     │
+                     │ Push to main branch
+                     │
+         ┌───────────▼────────────┐
+         │   GitHub Actions       │
+         │   (CI/CD Workflow)     │
+         └───────────┬────────────┘
+                     │
+         ┌───────────▼────────────┐
+         │  1. Install Dependencies│
+         │     npm install        │
+         └───────────┬────────────┘
+                     │
+         ┌───────────▼────────────┐
+         │  2. Run Tests          │
+         │     npm test           │
+         │     (Unit + Integration)│
+         └───────────┬────────────┘
+                     │
+                  Tests Pass?
+                     │
+         ┌───────────▼────────────┐
+         │  3. Build Application  │
+         │     npm run build      │
+         └───────────┬────────────┘
+                     │
+         ┌───────────▼────────────┐
+         │  4. Build Docker Image │
+         │     docker build       │
+         └───────────┬────────────┘
+                     │
+         ┌───────────▼────────────┐
+         │  5. Push to Registry   │
+         │     docker push        │
+         └───────────┬────────────┘
+                     │
+         ┌───────────▼────────────┐
+         │  6. Deploy to Staging  │
+         │     kubectl apply      │
+         └───────────┬────────────┘
+                     │
+         ┌───────────▼────────────┐
+         │  7. Run E2E Tests      │
+         │     (Playwright)       │
+         └───────────┬────────────┘
+                     │
+              Tests Pass?
+                     │
+         ┌───────────▼────────────┐
+         │  8. Deploy to Production│
+         │     (Blue-Green)       │
+         └────────────────────────┘
+\`\`\`
+
+---
+
+**Document Version:** 1.0  
+**Last Updated:** February 2025  
+**Maintained By:** Development Team

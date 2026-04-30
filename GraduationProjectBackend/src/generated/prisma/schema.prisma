@@ -1,0 +1,819 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+enum Role {
+  STUDENT
+  LEADER
+  TA
+  DOCTOR
+  ADMIN
+}
+
+enum AccountStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+enum TeamVisibility {
+  PUBLIC
+  PRIVATE
+}
+
+enum TeamStage {
+  REQUIREMENTS
+  DESIGN
+  IMPLEMENTATION
+  TESTING
+  DEPLOYMENT
+  MAINTENANCE
+}
+
+enum TeamInvitationStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  EXPIRED
+}
+
+enum TeamJoinRequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELLED
+}
+
+enum SupervisorRequestStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  CANCELLED
+}
+
+enum GitHubOwnerType {
+  USER
+  ORGANIZATION
+}
+
+enum GitHubRepositoryVisibility {
+  PUBLIC
+  PRIVATE
+  INTERNAL
+}
+
+enum GitHubRepositoryConnectionStatus {
+  PENDING
+  ACTIVE
+  ERROR
+  DISCONNECTED
+}
+
+enum GitHubSyncStatus {
+  IDLE
+  SYNCING
+  DEGRADED
+  ERROR
+}
+
+enum GitHubWebhookDeliveryStatus {
+  PENDING
+  PROCESSED
+  FAILED
+  IGNORED
+}
+
+enum TaskStatus {
+  BACKLOG
+  TODO
+  IN_PROGRESS
+  REVIEW
+  APPROVED
+  DONE
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum TaskType {
+  CODE
+  DOCUMENTATION
+  DESIGN
+  RESEARCH
+  MEETING
+  PRESENTATION
+  OTHER
+}
+
+enum TaskIntegrationMode {
+  MANUAL
+  GITHUB
+}
+
+enum TaskOrigin {
+  GPMS
+  GITHUB_IMPORT
+}
+
+enum TaskReviewDecision {
+  APPROVED
+  CHANGES_REQUESTED
+}
+
+enum DeliverableType {
+  SRS
+  UML
+  PROTOTYPE
+  CODE
+  TEST_PLAN
+  FINAL_REPORT
+  PRESENTATION
+}
+
+enum SubmissionSourceType {
+  MANUAL_UPLOAD
+  GITHUB_RELEASE
+  GITHUB_ARTIFACT
+}
+
+enum SubmissionStatus {
+  PENDING
+  UNDER_REVIEW
+  REVISION_REQUIRED
+  APPROVED
+}
+
+enum DocumentCategory {
+  DELIVERABLE
+  DOCUMENTATION
+  OTHER
+}
+
+enum ResourceCategory {
+  DOCUMENTATION
+  TUTORIAL
+  CODE
+  TEMPLATE
+  OTHER
+}
+
+enum ResourceType {
+  FILE
+  VIDEO
+  LINK
+  GITHUB
+}
+
+enum NotificationType {
+  TASK_ASSIGNED
+  TASK_REVIEWED
+  TASK_APPROVED
+  TASK_CHANGES_REQUESTED
+  TEAM_INVITE_RECEIVED
+  TEAM_JOIN_REQUEST_RECEIVED
+  TEAM_JOIN_REQUEST_APPROVED
+  TEAM_JOIN_REQUEST_REJECTED
+  SUPERVISOR_REQUEST_RECEIVED
+  SUPERVISOR_REQUEST_ACCEPTED
+  SUPERVISOR_REQUEST_DECLINED
+  SUBMISSION_GRADED
+  SUBMISSION_FEEDBACK
+  SYSTEM
+}
+
+enum RiskStatus {
+  OPEN
+  MONITORING
+  RESOLVED
+}
+
+enum RiskApprovalStatus {
+  PENDING
+  APPROVED
+  REVISION_REQUESTED
+}
+
+enum RiskChance {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum RiskSeverity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum Department {
+  COMPUTER_SCIENCE
+  SOFTWARE_ENGINEERING
+  INFORMATION_TECHNOLOGY
+  COMPUTER_ENGINEERING
+  DATA_SCIENCE
+  ARTIFICIAL_INTELLIGENCE
+  CYBERSECURITY_INFOSEC
+  INFORMATION_SYSTEMS
+  BIOINFORMATICS
+}
+
+enum AcademicYear {
+  YEAR_1
+  YEAR_2
+  YEAR_3
+  YEAR_4
+  YEAR_5
+}
+
+enum PreferredTrack {
+  FRONTEND_DEVELOPMENT
+  BACKEND_DEVELOPMENT
+  FULLSTACK_DEVELOPMENT
+  MOBILE_APP_DEVELOPMENT
+  DEVOPS
+  CLOUD_ENGINEERING
+  SOFTWARE_ARCHITECTURE
+  QUALITY_ASSURANCE
+  GAME_DEVELOPMENT
+}
+
+model User {
+  id String @id @default(cuid())
+
+  firstName String
+  lastName  String
+  email     String  @unique
+  phone     String?
+
+  academicId     String          @unique
+  department     Department?
+  academicYear   AcademicYear?
+  preferredTrack PreferredTrack?
+
+  // OAuth
+  googleId       String? @unique
+  githubId       String? @unique
+  avatarUrl      String?
+  bio            String?
+  linkedinUrl    String?
+  githubUsername String?
+
+  // Auth (local)
+  passwordHash String?
+
+  role          Role          @default(STUDENT)
+  accountStatus AccountStatus @default(ACTIVE)
+
+  // Email verification
+  isEmailVerified            Boolean   @default(false)
+  emailVerificationCodeHash  String?
+  emailVerificationExpiresAt DateTime?
+
+  // Password reset
+  passwordResetCodeHash  String?
+  passwordResetExpiresAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ledTeam                    Team?                              @relation("TeamLeader")
+  doctorTeams                Team[]                             @relation("TeamDoctor")
+  taTeams                    Team[]                             @relation("TeamTA")
+  teamMembership             TeamMember?                        @relation("TeamMemberUser")
+  sentTeamInvitations        TeamInvitation[]                   @relation("TeamInvitationSender")
+  receivedTeamInvitations    TeamInvitation[]                   @relation("TeamInvitationRecipient")
+  teamJoinRequests           TeamJoinRequest[]                  @relation("TeamJoinRequestUser")
+  sentSupervisorRequests     TeamSupervisorRequest[]            @relation("TeamSupervisorRequestSender")
+  receivedSupervisorRequests TeamSupervisorRequest[]            @relation("TeamSupervisorRequestRecipient")
+  githubConnection           GitHubUserConnection?
+  assignedTasks              Task[]                             @relation("TaskAssignee")
+  createdTasks               Task[]                             @relation("TaskCreator")
+  reviewedTasks              Task[]                             @relation("TaskReviewer")
+  submittedWeeklyReports     WeeklyReport[]                     @relation("WeeklyReportSubmitter")
+  submittedSubmissions       Submission[]                       @relation("SubmissionSubmitter")
+  reviewedSubmissions        Submission[]                       @relation("SubmissionReviewer")
+  uploadedDocuments          TeamDocument[]                     @relation("DocumentUploader")
+  createdResources           TeamResource[]                     @relation("ResourceCreator")
+  createdRisks               Risk[]                             @relation("RiskCreator")
+  monitoredRisks             Risk[]                             @relation("RiskMonitor")
+  approvedRisks              Risk[]                             @relation("RiskApprover")
+  notifications              Notification[]                     @relation("UserNotifications")
+  teamGroupChatParticipants  TeamGroupConversationParticipant[]
+  sentTeamGroupMessages      TeamGroupMessage[]                 @relation("TeamGroupMessageSender")
+  directChatConversationsOne DirectChatConversation[]           @relation("DirectChatConversationUserOne")
+  directChatConversationsTwo DirectChatConversation[]           @relation("DirectChatConversationUserTwo")
+  sentDirectChatMessages     DirectChatMessage[]                @relation("DirectChatMessageSender")
+  receivedDirectChatMessages DirectChatMessage[]                @relation("DirectChatMessageRecipient")
+  deletedDirectChatMessages  DirectChatMessage[]                @relation("DirectChatMessageDeletedBy")
+}
+
+model Team {
+  id                String         @id @default(cuid())
+  name              String
+  bio               String
+  leaderId          String         @unique
+  doctorId          String?
+  taId              String?
+  inviteCode        String         @unique
+  maxMembers        Int            @default(5)
+  visibility        TeamVisibility @default(PUBLIC)
+  allowJoinRequests Boolean        @default(true)
+  stage             TeamStage      @default(REQUIREMENTS)
+  stack             String[]       @default([])
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+
+  leader             User                    @relation("TeamLeader", fields: [leaderId], references: [id], onDelete: Cascade)
+  doctor             User?                   @relation("TeamDoctor", fields: [doctorId], references: [id], onDelete: SetNull)
+  ta                 User?                   @relation("TeamTA", fields: [taId], references: [id], onDelete: SetNull)
+  members            TeamMember[]
+  invitations        TeamInvitation[]
+  joinRequests       TeamJoinRequest[]
+  supervisorRequests TeamSupervisorRequest[]
+  githubRepository   GitHubTeamRepository?
+  tasks              Task[]
+  weeklyReports      WeeklyReport[]
+  submissions        Submission[]
+  documents          TeamDocument[]
+  risks              Risk[]
+  groupConversation  TeamGroupConversation?
+
+  @@index([visibility, stage])
+  @@index([name])
+  @@index([doctorId])
+  @@index([taId])
+}
+
+model Risk {
+  id               String             @id @default(cuid())
+  teamId           String
+  title            String
+  description      String
+  category         String
+  chance           RiskChance         @default(MEDIUM)
+  impact           RiskChance         @default(MEDIUM)
+  severity         RiskSeverity?
+  status           RiskStatus         @default(OPEN)
+  approvalStatus   RiskApprovalStatus @default(PENDING)
+  mitigation       String?
+  monitoringNotes  String?
+  resolutionNotes  String?
+  approvalNote     String?
+  createdByUserId  String
+  monitorUserId    String?
+  approvedByUserId String?
+  approvedAt       DateTime?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+
+  team       Team  @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  createdBy  User  @relation("RiskCreator", fields: [createdByUserId], references: [id], onDelete: Cascade)
+  monitor    User? @relation("RiskMonitor", fields: [monitorUserId], references: [id], onDelete: SetNull)
+  approvedBy User? @relation("RiskApprover", fields: [approvedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([teamId, status])
+  @@index([teamId, approvalStatus])
+  @@index([monitorUserId])
+  @@index([approvedByUserId])
+}
+
+model TeamMember {
+  id       String   @id @default(cuid())
+  teamId   String
+  userId   String   @unique
+  joinedAt DateTime @default(now())
+
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  user User @relation("TeamMemberUser", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([teamId])
+}
+
+model TeamInvitation {
+  id            String               @id @default(cuid())
+  teamId        String
+  invitedUserId String
+  invitedById   String
+  status        TeamInvitationStatus @default(PENDING)
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+
+  team        Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  invitedUser User @relation("TeamInvitationRecipient", fields: [invitedUserId], references: [id], onDelete: Cascade)
+  invitedBy   User @relation("TeamInvitationSender", fields: [invitedById], references: [id], onDelete: Cascade)
+
+  @@unique([teamId, invitedUserId])
+  @@index([invitedUserId, status])
+}
+
+model TeamJoinRequest {
+  id        String                @id @default(cuid())
+  teamId    String
+  userId    String
+  message   String?
+  status    TeamJoinRequestStatus @default(PENDING)
+  createdAt DateTime              @default(now())
+  updatedAt DateTime              @updatedAt
+
+  team Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  user User @relation("TeamJoinRequestUser", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([teamId, userId])
+  @@index([userId, status])
+}
+
+model TeamSupervisorRequest {
+  id                 String                  @id @default(cuid())
+  teamId             String
+  supervisorId       String
+  requestedById      String
+  supervisorRole     Role
+  projectName        String
+  projectDescription String
+  technologies       String[]                @default([])
+  status             SupervisorRequestStatus @default(PENDING)
+  respondedAt        DateTime?
+  createdAt          DateTime                @default(now())
+  updatedAt          DateTime                @updatedAt
+
+  team        Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  supervisor  User @relation("TeamSupervisorRequestRecipient", fields: [supervisorId], references: [id], onDelete: Cascade)
+  requestedBy User @relation("TeamSupervisorRequestSender", fields: [requestedById], references: [id], onDelete: Cascade)
+
+  @@unique([teamId, supervisorId])
+  @@index([teamId, status])
+  @@index([supervisorId, status])
+  @@index([supervisorRole, status])
+}
+
+model GitHubTeamRepository {
+  id                          String                           @id @default(cuid())
+  teamId                      String                           @unique
+  ownerLogin                  String
+  ownerType                   GitHubOwnerType                  @default(USER)
+  repoName                    String
+  fullName                    String                           @unique
+  installationId              String?
+  defaultBranch               String                           @default("main")
+  visibility                  GitHubRepositoryVisibility       @default(PRIVATE)
+  repoUrl                     String
+  cloneUrlHttps               String?
+  cloneUrlSsh                 String?
+  connectionStatus            GitHubRepositoryConnectionStatus @default(PENDING)
+  syncStatus                  GitHubSyncStatus                 @default(IDLE)
+  lastSyncAt                  DateTime?
+  lastWebhookAt               DateTime?
+  syncIssuesToTasks           Boolean                          @default(true)
+  syncActivityToWeeklyReports Boolean                          @default(true)
+  syncReleasesToSubmissions   Boolean                          @default(true)
+  createdAt                   DateTime                         @default(now())
+  updatedAt                   DateTime                         @updatedAt
+
+  team              Team                    @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  webhookDeliveries GitHubWebhookDelivery[]
+  syncCursors       GitHubSyncCursor[]
+
+  @@index([ownerLogin, repoName])
+  @@index([installationId])
+}
+
+model GitHubUserConnection {
+  id                    String    @id @default(cuid())
+  userId                String    @unique
+  githubUserId          String    @unique
+  login                 String
+  displayName           String?
+  avatarUrl             String?
+  accessTokenEncrypted  String
+  refreshTokenEncrypted String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  tokenType             String?
+  scopes                String[]  @default([])
+  isActive              Boolean   @default(true)
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model GitHubWebhookDelivery {
+  id                String                      @id @default(cuid())
+  repositoryId      String?
+  deliveryId        String                      @unique
+  event             String
+  action            String?
+  signatureVerified Boolean                     @default(false)
+  status            GitHubWebhookDeliveryStatus @default(PENDING)
+  error             String?
+  payload           Json?
+  processedAt       DateTime?
+  createdAt         DateTime                    @default(now())
+  updatedAt         DateTime                    @updatedAt
+
+  repository GitHubTeamRepository? @relation(fields: [repositoryId], references: [id], onDelete: SetNull)
+
+  @@index([repositoryId, event])
+  @@index([status, createdAt])
+}
+
+model GitHubSyncCursor {
+  id           String    @id @default(cuid())
+  repositoryId String
+  resourceType String
+  cursorKey    String?
+  etag         String?
+  cursor       Json?
+  lastSyncedAt DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  repository GitHubTeamRepository @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
+
+  @@unique([repositoryId, resourceType])
+}
+
+model Task {
+  id                        String              @id @default(cuid())
+  teamId                    String
+  taskType                  TaskType            @default(OTHER)
+  integrationMode           TaskIntegrationMode @default(MANUAL)
+  origin                    TaskOrigin          @default(GPMS)
+  githubIssueId             String?             @unique
+  githubIssueNumber         Int?
+  githubIssueUrl            String?
+  githubIssueState          String?
+  githubBranchName          String?
+  githubPullRequestId       String?
+  githubPullRequestNumber   Int?
+  githubPullRequestUrl      String?
+  githubPullRequestState    String?
+  githubPullRequestBase     String?
+  githubPullRequestHead     String?
+  githubPullRequestMergedAt DateTime?
+  githubLatestCommitSha     String?
+  githubLatestCommitUrl     String?
+  githubCommitCount         Int                 @default(0)
+  title                     String
+  description               String?
+  status                    TaskStatus          @default(BACKLOG)
+  priority                  TaskPriority        @default(MEDIUM)
+  assigneeUserId            String?
+  createdByUserId           String?
+  reviewedByUserId          String?
+  labels                    String[]            @default([])
+  startDate                 DateTime?
+  dueDate                   DateTime?
+  acceptedAt                DateTime?
+  submittedForReviewAt      DateTime?
+  reviewedAt                DateTime?
+  reviewFeedback            String?
+  reviewComment             String?
+  reviewDecision            TaskReviewDecision?
+  reviewSnapshot            Json?
+  syncedFromGithub          Boolean             @default(false)
+  lastSyncedAt              DateTime?
+  createdAt                 DateTime            @default(now())
+  updatedAt                 DateTime            @updatedAt
+
+  team       Team  @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  assignee   User? @relation("TaskAssignee", fields: [assigneeUserId], references: [id], onDelete: SetNull)
+  createdBy  User? @relation("TaskCreator", fields: [createdByUserId], references: [id], onDelete: SetNull)
+  reviewedBy User? @relation("TaskReviewer", fields: [reviewedByUserId], references: [id], onDelete: SetNull)
+
+  @@unique([teamId, githubIssueNumber])
+  @@index([teamId, status])
+  @@index([assigneeUserId])
+  @@index([createdByUserId])
+  @@index([reviewedByUserId])
+  @@index([teamId, integrationMode])
+  @@index([teamId, githubPullRequestNumber])
+}
+
+model WeeklyReport {
+  id             String    @id @default(cuid())
+  teamId         String
+  submittedById  String?
+  weekLabel      String
+  periodStart    DateTime?
+  periodEnd      DateTime?
+  summaryDraft   String?
+  summaryFinal   String?
+  githubActivity Json?
+  isSubmitted    Boolean   @default(false)
+  submittedAt    DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  team        Team  @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  submittedBy User? @relation("WeeklyReportSubmitter", fields: [submittedById], references: [id], onDelete: SetNull)
+
+  @@unique([teamId, weekLabel])
+  @@index([teamId, createdAt])
+  @@index([submittedById])
+}
+
+model Submission {
+  id                String               @id @default(cuid())
+  teamId            String
+  deliverableType   DeliverableType
+  sdlcPhase         TeamStage
+  sourceType        SubmissionSourceType @default(MANUAL_UPLOAD)
+  title             String?
+  notes             String?
+  status            SubmissionStatus     @default(PENDING)
+  fileName          String?
+  fileSize          Int?
+  fileType          String?
+  fileUrl           String?
+  githubReleaseId   String?              @unique
+  githubReleaseTag  String?
+  githubReleaseUrl  String?
+  artifactUrl       String?
+  version           Int                  @default(1)
+  submittedByUserId String?
+  reviewedByUserId  String?
+  reviewedAt        DateTime?
+  submittedAt       DateTime             @default(now())
+  deadline          DateTime?
+  late              Boolean              @default(false)
+  feedback          String?
+  grade             Int?
+  createdAt         DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+
+  team        Team  @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  submittedBy User? @relation("SubmissionSubmitter", fields: [submittedByUserId], references: [id], onDelete: SetNull)
+  reviewedBy  User? @relation("SubmissionReviewer", fields: [reviewedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([teamId, deliverableType])
+  @@index([teamId, sdlcPhase])
+  @@index([teamId, status])
+  @@index([submittedByUserId])
+  @@index([reviewedByUserId])
+}
+
+model TeamDocument {
+  id               String           @id @default(cuid())
+  teamId           String
+  title            String
+  description      String
+  category         DocumentCategory @default(OTHER)
+  fileName         String
+  fileSize         Int?
+  fileType         String
+  url              String
+  tags             String[]         @default([])
+  uploadedByUserId String
+  uploadedByName   String
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  team       Team @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  uploadedBy User @relation("DocumentUploader", fields: [uploadedByUserId], references: [id], onDelete: Cascade)
+
+  @@index([teamId, category])
+  @@index([uploadedByUserId])
+}
+
+model TeamResource {
+  id              String           @id @default(cuid())
+  title           String
+  description     String
+  category        ResourceCategory @default(DOCUMENTATION)
+  type            ResourceType     @default(FILE)
+  url             String
+  tags            String[]         @default([])
+  authorName      String
+  createdByUserId String
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  createdBy User @relation("ResourceCreator", fields: [createdByUserId], references: [id], onDelete: Cascade)
+
+  @@index([createdByUserId])
+  @@index([category])
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  type      NotificationType
+  title     String
+  message   String
+  read      Boolean          @default(false)
+  actionUrl String?
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  user User @relation("UserNotifications", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, read])
+  @@index([userId, createdAt])
+}
+
+model TeamGroupConversation {
+  id            String    @id @default(cuid())
+  teamId        String    @unique
+  lastMessageAt DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  team         Team                               @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  participants TeamGroupConversationParticipant[]
+  messages     TeamGroupMessage[]
+
+  @@index([lastMessageAt])
+}
+
+model TeamGroupConversationParticipant {
+  id             String    @id @default(cuid())
+  conversationId String
+  userId         String
+  joinedAt       DateTime  @default(now())
+  clearedAt      DateTime?
+  lastSeenAt     DateTime?
+
+  conversation TeamGroupConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  user         User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([conversationId, userId])
+  @@index([userId])
+}
+
+model TeamGroupMessage {
+  id             String   @id @default(cuid())
+  conversationId String
+  senderId       String
+  content        String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  conversation TeamGroupConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender       User                  @relation("TeamGroupMessageSender", fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId, createdAt])
+  @@index([senderId, createdAt])
+}
+
+model DirectChatConversation {
+  id                String    @id @default(cuid())
+  pairKey           String    @unique
+  userOneId         String
+  userTwoId         String
+  userOneClearedAt  DateTime?
+  userTwoClearedAt  DateTime?
+  userOneLastSeenAt DateTime?
+  userTwoLastSeenAt DateTime?
+  lastMessageAt     DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  userOne  User                @relation("DirectChatConversationUserOne", fields: [userOneId], references: [id], onDelete: Cascade)
+  userTwo  User                @relation("DirectChatConversationUserTwo", fields: [userTwoId], references: [id], onDelete: Cascade)
+  messages DirectChatMessage[]
+
+  @@index([userOneId])
+  @@index([userTwoId])
+  @@index([lastMessageAt])
+}
+
+model DirectChatMessage {
+  id             String    @id @default(cuid())
+  conversationId String
+  senderId       String
+  recipientId    String
+  deletedById    String?
+  content        String
+  fileUrl        String?
+  fileName       String?
+  fileSize       Int?
+  fileType       String?
+  deliveredAt    DateTime?
+  seenAt         DateTime?
+  deletedAt      DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  conversation DirectChatConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender       User                   @relation("DirectChatMessageSender", fields: [senderId], references: [id], onDelete: Cascade)
+  recipient    User                   @relation("DirectChatMessageRecipient", fields: [recipientId], references: [id], onDelete: Cascade)
+  deletedBy    User?                  @relation("DirectChatMessageDeletedBy", fields: [deletedById], references: [id], onDelete: SetNull)
+
+  @@index([conversationId, createdAt])
+  @@index([senderId, createdAt])
+  @@index([recipientId, createdAt])
+  @@index([recipientId, deliveredAt])
+  @@index([recipientId, seenAt])
+}

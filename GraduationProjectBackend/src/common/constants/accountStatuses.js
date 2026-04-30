@@ -1,0 +1,7 @@
+export const ACCOUNT_STATUSES = Object.freeze({
+  ACTIVE: "ACTIVE",
+  INACTIVE: "INACTIVE",
+  SUSPENDED: "SUSPENDED",
+});
+
+export const ACCOUNT_STATUS_VALUES = Object.values(ACCOUNT_STATUSES);
